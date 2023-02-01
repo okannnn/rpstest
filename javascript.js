@@ -1,28 +1,29 @@
 function getComputerChoice() {
     // Generates a choice for computer player.
-    let randInt = generateRandDiscreteNumber(0, 2)
-    let compAns = mapIntToValue(randInt)
+    let compAns = generateRandDiscreteNumber(0, 2)
+    // let compAns = mapIntToValue(randInt)
     console.log(`computer choice: ` + compAns)
-}
-
-function mapIntToValue(randInt) {
-    //Takes value (expected [0, 1, 2]) and converts to string answers.
-    switch (randInt) {
-        case 0:
-            compAns = "Rock"
-            break;
-        case 1:
-            compAns = "Paper"
-            break;
-        case 2:
-            compAns = "Scissors"
-            break;
-        default:
-            compAns = "Error"
-    }
-
     return compAns
 }
+
+// function mapIntToValue(randInt) {
+//     //Takes value (expected [0, 1, 2]) and converts to string answers.
+//     switch (randInt) {
+//         case 0:
+//             compAns = "Rock"
+//             break;
+//         case 1:
+//             compAns = "Paper"
+//             break;
+//         case 2:
+//             compAns = "Scissors"
+//             break;
+//         default:
+//             compAns = "Error"
+//     }
+
+//     return compAns
+// }
 
 function generateRandDiscreteNumber(a, b) {
     // Takes two numbers, and generates a random discrete number in that range(inclusive).
@@ -95,31 +96,63 @@ function mapPlayerChoiceToValue(playerChoice) {
     //converts player input into a preset answer.
     switch (playerChoice) {
         case 'rock':
-            playerAns = "Rock"
+            playerAns = 0
             break;
         case 'paper':
-            playerAns = "Paper"
+            playerAns = 1
             break;
         case 'scissors':
-            playerAns = "Scissors"
+            playerAns = 2
             break;
         default:
-            playerAns = "Error"
+            playerAns = undefined
     }
 
     return playerAns
 }
 
 function playRound(){
-    let playerAns = getPlayerChoice()
-    let computerAns = getComputerChoice()
+    let playerAns = Number(getPlayerChoice())
+    let computerAns = Number(getComputerChoice())
+    let result = compareAnswer(playerAns, computerAns)
+    convertResult(result)
+    return result
+}
+
+function compareAnswer(playerAns, computerAns) {
+    
+    if (playerAns == computerAns) {
+        return 0
+    }
+
+    else if (((playerAns + 1) % 3) == computerAns) {
+        return -1
+    }
+
+    else if (((playerAns + 2) % 3) == computerAns) {
+        return 1
+    }
 
 }
 
+function convertResult(result) {
+    
+    switch(result){
+        case -1:
+            console.log("You Lose")
+            break;
+        case 1:
+            console.log("You Win")
+            break;
+        case 0:
+            console.log("Tie Game")
+    }
+}
 
 function main() {
-    playRound()
 
+    playRound()
+    
 }
 
 main()

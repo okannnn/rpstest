@@ -2,7 +2,7 @@ function getComputerChoice() {
     // Generates a choice for computer player.
     let randInt = generateRandDiscreteNumber(0, 2)
     let compAns = mapIntToValue(randInt)
-    // console.log(compAns)
+    console.log(`computer choice: ` + compAns)
 }
 
 function mapIntToValue(randInt) {
@@ -55,15 +55,71 @@ function sortValues(a, b) {
 }
 
 function getPlayerChoice() {
-    promptUserChoice()
+    let playerChoice = promptUserChoice()
+    playerChoice = mapPlayerChoiceToValue(playerChoice)
+    console.log(`Player choice: ` + playerChoice)
+    return playerChoice
 }
 
 function promptUserChoice() {
+    //Asks for user input, checks if input is a valid answer.
     
+    //Block asks for user input repeatedly until a valid answer is given.
+    let authenticator = false;
+    while (authenticator == false) {
+        userInput = prompt()
+        authenticator = validateUserInput(userInput)
+        
+        if (authenticator == false) {
+            console.log("Please try again")
+        }
+    }
+    return userInput.toLowerCase()
 }
 
+function validateUserInput(userInput) {
+    //tests user input against all possible valid answers.
+
+    let testCase = String(userInput)
+    testCase = userInput.toLowerCase()
+    
+    if (testCase == 'rock' || testCase == "paper" || testCase == "scissors") {
+        return true
+    }
+    else {
+        return false
+    }
+}
+
+function mapPlayerChoiceToValue(playerChoice) {
+    //converts player input into a preset answer.
+    switch (playerChoice) {
+        case 'rock':
+            playerAns = "Rock"
+            break;
+        case 'paper':
+            playerAns = "Paper"
+            break;
+        case 'scissors':
+            playerAns = "Scissors"
+            break;
+        default:
+            playerAns = "Error"
+    }
+
+    return playerAns
+}
+
+function playRound(){
+    let playerAns = getPlayerChoice()
+    let computerAns = getComputerChoice()
+
+}
+
+
 function main() {
-    getComputerChoice()
+    playRound()
+
 }
 
 main()

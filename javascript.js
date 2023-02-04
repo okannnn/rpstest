@@ -2,28 +2,28 @@ function getComputerChoice() {
     // Generates a choice for computer player.
     let compAns = generateRandDiscreteNumber(0, 2)
     // let compAns = mapIntToValue(randInt)
-    console.log(`computer choice: ` + compAns)
+    console.log(`computer choice: ` + mapIntToValue(compAns))
     return compAns
 }
 
-// function mapIntToValue(randInt) {
-//     //Takes value (expected [0, 1, 2]) and converts to string answers.
-//     switch (randInt) {
-//         case 0:
-//             compAns = "Rock"
-//             break;
-//         case 1:
-//             compAns = "Paper"
-//             break;
-//         case 2:
-//             compAns = "Scissors"
-//             break;
-//         default:
-//             compAns = "Error"
-//     }
+function mapIntToValue(randInt) {
+    //Takes value (expected [0, 1, 2]) and converts to string answers.
+    switch (randInt) {
+        case 0:
+            compAns = "Rock"
+            break;
+        case 1:
+            compAns = "Paper"
+            break;
+        case 2:
+            compAns = "Scissors"
+            break;
+        default:
+            compAns = "Error"
+    }
 
-//     return compAns
-// }
+    return compAns
+}
 
 function generateRandDiscreteNumber(a, b) {
     // Takes two numbers, and generates a random discrete number in that range(inclusive).
@@ -58,7 +58,7 @@ function sortValues(a, b) {
 function getPlayerChoice() {
     let playerChoice = promptUserChoice()
     playerChoice = mapPlayerChoiceToValue(playerChoice)
-    console.log(`Player choice: ` + playerChoice)
+    console.log(`Player choice: ` + mapIntToValue(playerChoice))
     return playerChoice
 }
 
@@ -111,11 +111,13 @@ function mapPlayerChoiceToValue(playerChoice) {
     return playerAns
 }
 
+
 function playRound(){
     let playerAns = Number(getPlayerChoice())
     let computerAns = Number(getComputerChoice())
     let result = compareAnswer(playerAns, computerAns)
-    convertResult(result)
+    describeGamestate(computerAns, playerAns, result)
+    // convertResult(result)
     return result
 }
 
@@ -149,9 +151,52 @@ function convertResult(result) {
     }
 }
 
+function describeGamestate(compAns, playerAns, result) {
+    
+    switch (result) {
+        case -1: console.log(`${mapIntToValue(compAns)} beats ${mapIntToValue(playerAns)}`)
+            break;
+        case 1: console.log(`${mapIntToValue(playerAns)} beats ${mapIntToValue(compAns)}`)
+            break;
+        case 0: console.log(`${mapIntToValue(compAns)} vs ${mapIntToValue(playerAns)}`)
+            break;
+    }
+
+}
+
+function game() {
+
+    let computerScore = 0;
+    let playerScore = 0;
+
+    while (playerScore < 3 && computerScore < 3){
+
+        let outcome = playRound()
+            if (outcome == -1){
+                computerScore++
+                console.log(`computerScore: ${computerScore} playerScore: ${playerScore}`)
+            }
+
+            else if (outcome == 1){
+                playerScore++
+                console.log(`computerScore: ${computerScore} playerScore: ${playerScore}`)
+            }
+
+            else {
+                console.log(`computerScore: ${computerScore} playerScore: ${playerScore}`)
+            }
+            console.log("")
+    }
+
+        
+}
+
+
+
+
 function main() {
 
-    playRound()
+    game()
     
 }
 
